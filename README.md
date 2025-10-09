@@ -3,6 +3,12 @@
 
 ## Resumo:
 O projeto consiste em um jogo multijogador online (2 jogadores) onde os jogadores terão que colaborar para completar tarefas antes do ataque de um oponente, que será atraído por sons, tanto dos personagens, tanto do microfone dos jogadores.
+
+## Tecnologias utilizadas:
+- **Engine**: Godot Engine (uma engine completa, de código aberto e mantida pela comunidade)
+- **IA aplicada**: Reconhecimento de voz
+- **Modelagem 3D**: Blender 
+
 ## Objetivos:
 ### Objetivos principais:
 - Criar uma versão totalmente jogável com conexão via LAN.
