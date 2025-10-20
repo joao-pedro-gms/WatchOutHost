@@ -39,17 +39,10 @@ jobs: # Tarefas a serem executadas
       - name: Extrair Build (Windows)
         # 'docker cp' copia arquivos de um contêiner para o host
         run: |
-          docker cp \
-            $(docker create --rm buildwoh:latest) \
-            :/app/build/windows/. \
-            ./artifacts/windows
+          docker cp $(docker create --rm buildwoh:latest) :/app/build/windows/. ./artifacts/windows
 
       - name: Extrair Build (Linux)
-        run: |
-          docker cp \
-            $(docker create --rm buildwoh:latest) \
-            :/app/build/linux/. \
-            ./artifacts/linux
+        run: docker cp $(docker create --rm buildwoh:latest) :/app/build/linux/. ./artifacts/linux
 
       # Passo 4: Salvar os arquivos como "Artefato" do GitHub
       # Isso permite que você baixe os builds pela interface do GitHub
