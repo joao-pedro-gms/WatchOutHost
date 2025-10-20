@@ -37,12 +37,17 @@ jobs: # Tarefas a serem executadas
         run: mkdir -p artifacts/windows && mkdir -p artifacts/linux
 
       - name: Extrair Build (Windows)
-        # 'docker cp' copia arquivos de um contêiner para o host
+        # Cria um container temporário, copia os artefatos e depois remove o container
         run: |
-          docker cp $(docker create --rm buildwoh:latest) :/app/build/windows/. ./artifacts/windows
+          CONTAINER_ID=$(docker create buildwoh:latest)
+          docker cp "$CONTAINER_ID":/app/build/windows/. ./artifacts/windows
+          docker rm "$CONTAINER_ID" >/dev/null
 
       - name: Extrair Build (Linux)
-        run: docker cp $(docker create --rm buildwoh:latest) :/app/build/linux/. ./artifacts/linux
+        run: |
+          CONTAINER_ID=$(docker create buildwoh:latest)
+          docker cp "$CONTAINER_ID":/app/build/linux/. ./artifacts/linux
+          docker rm "$CONTAINER_ID" >/dev/null
 
       # Passo 4: Salvar os arquivos como "Artefato" do GitHub
       # Isso permite que você baixe os builds pela interface do GitHub
