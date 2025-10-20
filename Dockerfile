@@ -3,7 +3,7 @@
 # Troque '4.2.2' pela versão exata do seu projeto Godot.
 # Imagens disponíveis: https://ghcr.io/godot-ci/godot-ci
 # Use a imagem oficial e a tag 'stable' correta
-FROM barichello/godot-ci:4.5.1 AS builder
+FROM barichello/godot-ci:4.5 AS builder
 
 # Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
