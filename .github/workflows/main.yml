@@ -40,7 +40,7 @@ jobs: # Tarefas a serem executadas
         # 'docker cp' copia arquivos de um contêiner para o host
         run: |
           docker cp \
-            $(docker create --rm buildWOH:latest) \
+            $(docker create --rm buildwoh:latest) \
             :/app/build/windows/. \
             ./artifacts/windows
 
