@@ -1,0 +1,62 @@
+# Nome do seu workflow (aparecerá na aba "Actions" do GitHub)
+name: Build Watch out host
+
+# Em quais eventos este script deve rodar?
+on:
+  push: # Rodar em todo 'git push'
+    branches: [ "main", "master" ] # ...que for feito nos branches 'main' ou 'master'
+  pull_request: # Rodar também em toda 'pull request'
+    branches: [ "main", "master" ]
+
+jobs: # Tarefas a serem executadas
+  build-godot-project:
+    # Onde a tarefa vai rodar: em um servidor Ubuntu limpo
+    runs-on: ubuntu-latest
+
+    steps:
+      # Passo 1: Baixar o código do seu repositório
+      - name: Checkout do Código
+        uses: actions/checkout@v4
+
+      # Passo 2: Construir a imagem Docker
+      # Ele vai procurar seu 'Dockerfile' e executar o build
+      # O '--load' é importante para manter o resultado acessível
+      - name: Build da Imagem Docker
+        uses: docker/build-push-action@v5
+        with:
+          context: . # Usar o Dockerfile deste diretório
+          load: true
+          tags: buildWOH:latest # Dá um nome para a imagem (igual fizemos localmente)
+          # Define o "target" como o estágio 'builder' do nosso Dockerfile
+          # Isso faz ele parar DEPOIS de rodar os comandos 'RUN' do build
+          target: builder 
+
+      # Passo 3: Extrair os arquivos .exe e .pck do contêiner
+      # O jogo foi construído DENTRO do contêiner. Precisamos copiá-lo para FORA.
+      - name: Criar diretório de saída
+        run: mkdir -p artifacts/windows && mkdir -p artifacts/linux
+
+      - name: Extrair Build (Windows)
+        # 'docker cp' copia arquivos de um contêiner para o host
+        run: |
+          docker cp \
+            $(docker create --rm buildWOH:latest) \
+            :/app/build/windows/. \
+            ./artifacts/windows
+
+      - name: Extrair Build (Linux)
+        run: |
+          docker cp \
+            $(docker create --rm buildWOH:latest) \
+            :/app/build/linux/. \
+            ./artifacts/linux
+
+      # Passo 4: Salvar os arquivos como "Artefato" do GitHub
+      # Isso permite que você baixe os builds pela interface do GitHub
+      - name: Upload dos Artefatos
+        uses: actions/upload-artifact@v4
+        with:
+          name: game-builds # Nome do arquivo .zip que será gerado
+          path: |
+            ./artifacts/windows/*
+            ./artifacts/linux/*
