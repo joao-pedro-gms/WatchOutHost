@@ -26,7 +26,7 @@ jobs: # Tarefas a serem executadas
         with:
           context: . # Usar o Dockerfile deste diretório
           load: true
-          tags: buildWOH:latest # Dá um nome para a imagem (igual fizemos localmente)
+          tags: buildwoh:latest # Dá um nome para a imagem (igual fizemos localmente)
           # Define o "target" como o estágio 'builder' do nosso Dockerfile
           # Isso faz ele parar DEPOIS de rodar os comandos 'RUN' do build
           target: builder 
@@ -37,19 +37,17 @@ jobs: # Tarefas a serem executadas
         run: mkdir -p artifacts/windows && mkdir -p artifacts/linux
 
       - name: Extrair Build (Windows)
-        # 'docker cp' copia arquivos de um contêiner para o host
+        # Cria um container temporário, copia os artefatos e depois remove o container
         run: |
-          docker cp \
-            $(docker create --rm buildWOH:latest) \
-            :/app/build/windows/. \
-            ./artifacts/windows
+          CONTAINER_ID=$(docker create buildwoh:latest)
+          docker cp "$CONTAINER_ID":/app/build/windows/. ./artifacts/windows
+          docker rm "$CONTAINER_ID" >/dev/null
 
       - name: Extrair Build (Linux)
         run: |
-          docker cp \
-            $(docker create --rm buildWOH:latest) \
-            :/app/build/linux/. \
-            ./artifacts/linux
+          CONTAINER_ID=$(docker create buildwoh:latest)
+          docker cp "$CONTAINER_ID":/app/build/linux/. ./artifacts/linux
+          docker rm "$CONTAINER_ID" >/dev/null
 
       # Passo 4: Salvar os arquivos como "Artefato" do GitHub
       # Isso permite que você baixe os builds pela interface do GitHub
