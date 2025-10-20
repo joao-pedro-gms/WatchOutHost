@@ -26,7 +26,7 @@ jobs: # Tarefas a serem executadas
         with:
           context: . # Usar o Dockerfile deste diretório
           load: true
-          tags: buildWOH:latest # Dá um nome para a imagem (igual fizemos localmente)
+          tags: buildwoh:latest # Dá um nome para a imagem (igual fizemos localmente)
           # Define o "target" como o estágio 'builder' do nosso Dockerfile
           # Isso faz ele parar DEPOIS de rodar os comandos 'RUN' do build
           target: builder 
@@ -47,7 +47,7 @@ jobs: # Tarefas a serem executadas
       - name: Extrair Build (Linux)
         run: |
           docker cp \
-            $(docker create --rm buildWOH:latest) \
+            $(docker create --rm buildwoh:latest) \
             :/app/build/linux/. \
             ./artifacts/linux
 
