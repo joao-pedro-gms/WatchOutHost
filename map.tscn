@@ -1,12 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://t0hkcdu8glba"]
+[gd_scene load_steps=10 format=3 uid="uid://btwilvvg8nc6k"]
 
-[ext_resource type="Script" uid="uid://ca6l3llv3pkdo" path="res://Scripts/playerMovement.gd" id="1_88gup"]
+[ext_resource type="Script" uid="uid://ca6l3llv3pkdo" path="res://Scripts/playerMovement.gd" id="1_wijl4"]
+[ext_resource type="PackedScene" uid="uid://lw50dw2www12" path="res://Models/Room.blend" id="2_e0an3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_v321d"]
-size = Vector3(10, 0, 10)
+size = Vector3(20, 0, 20)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_88gup"]
-size = Vector3(10, 0, 10)
+size = Vector3(20, 0, 20)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_bisa2"]
 radius = 0.3
@@ -25,18 +26,20 @@ sky_material = SubResource("ProceduralSkyMaterial_88gup")
 background_mode = 2
 sky = SubResource("Sky_bisa2")
 
-[node name="Room" type="Node3D"]
+[node name="Map" type="Node3D"]
 
 [node name="floor" type="StaticBody3D" parent="."]
 
 [node name="floorMesh" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3195634, 0, 0)
 mesh = SubResource("BoxMesh_v321d")
 
 [node name="floorCollision" type="CollisionShape3D" parent="floor"]
 shape = SubResource("BoxShape3D_88gup")
 
 [node name="Player" type="CharacterBody3D" parent="."]
-script = ExtResource("1_88gup")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8729873, 0, 0)
+script = ExtResource("1_wijl4")
 
 [node name="playerMesh" type="MeshInstance3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
@@ -54,3 +57,8 @@ environment = SubResource("Environment_4o3f6")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.739185, 0.673503, 0, -0.673503, 0.739185, 0, 12.4372, 7.23892)
+
+[node name="Room" parent="." instance=ExtResource("2_e0an3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3096161, 1.75, 0.03763485)
+
+[editable path="Room"]
