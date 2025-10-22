@@ -3,15 +3,15 @@ extends CharacterBody3D
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
-const MOUSE_SENSIVITY = 0.002
+const MOUSE_SENSITIVITY = 0.002
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _input(event):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		rotate_y(-event.relative.x * MOUSE_SENSIVITY)
-		$playerCamera.rotate_x(-event.relative.y * MOUSE_SENSIVITY)
+		rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
+		$playerCamera.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
 		$playerCamera.rotation.x = clampf($playerCamera.rotation.x, -deg_to_rad(70), deg_to_rad(70))
 
 func _physics_process(delta: float) -> void:
