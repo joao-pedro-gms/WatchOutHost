@@ -29,7 +29,7 @@ jobs: # Tarefas a serem executadas
           tags: buildwoh:latest # Dá um nome para a imagem (igual fizemos localmente)
           # Define o "target" como o estágio 'builder' do nosso Dockerfile
           # Isso faz ele parar DEPOIS de rodar os comandos 'RUN' do build
-          target: builder 
+          target: builder
 
       # Passo 3: Extrair os arquivos .exe e .pck do contêiner
       # O jogo foi construído DENTRO do contêiner. Precisamos copiá-lo para FORA.
