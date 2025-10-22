@@ -7,7 +7,7 @@ O projeto consiste em um jogo multijogador online (2 jogadores) onde os jogadore
 ## Tecnologias utilizadas:
 - **Engine**: Godot Engine (uma engine completa, de código aberto e mantida pela comunidade)
 - **IA aplicada**: Reconhecimento de voz
-- **Modelagem 3D**: Blender 
+- **Modelagem 3D**: Blender
 
 ## Objetivos:
 ### Objetivos principais:
