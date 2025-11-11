@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://t0hkcdu8glba"]
+[gd_scene load_steps=12 format=3 uid="uid://t0hkcdu8glba"]
 
 [ext_resource type="Script" uid="uid://ca6l3llv3pkdo" path="res://Scripts/playerMovement.gd" id="1_88gup"]
 [ext_resource type="PackedScene" uid="uid://fv0trqxi41yx" path="res://Models/Room.glb" id="2_bisa2"]
@@ -25,6 +25,11 @@ sky_material = SubResource("ProceduralSkyMaterial_88gup")
 [sub_resource type="Environment" id="Environment_4o3f6"]
 background_mode = 2
 sky = SubResource("Sky_bisa2")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bisa2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4o3f6"]
+size = Vector3(0.46920776, 0.4897461, 1)
 
 [node name="Map" type="Node3D"]
 
@@ -59,3 +64,15 @@ transform = Transform3D(1, 0, 0, 0, 0.739185, 0.673503, 0, -0.673503, 0.739185, 
 
 [node name="Room" parent="." instance=ExtResource("2_bisa2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9296634, 1.75, -0.9804945)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9296634, -1.75, 0.9804945)
+physics_material_override = SubResource("PhysicsMaterial_bisa2")
+
+[node name="01WindowsCollision" type="CollisionShape3D" parent="Room/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2436508, 0.3263647, -1.6927283)
+shape = SubResource("BoxShape3D_4o3f6")
+
+[node name="02WindowsCollision" type="CollisionShape3D" parent="Room/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0747566, 0.3263647, -1.6624188)
+shape = SubResource("BoxShape3D_4o3f6")
